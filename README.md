@@ -30,6 +30,9 @@ explain how to use the library and how it works in different scenario.
 The library must be tested with the maximum possible code coverage, the source
 code used to run the unit tests should be put inside the `test` folder.
 
+If scripts or other tools are needed for the library they must be put inside
+the `tools` folder.
+
 No other folders should be created besides the ones described before if not
 necessary, to handle complex file structures nested folders can be used.
 
