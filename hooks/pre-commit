@@ -1,3 +1,36 @@
-#!/bin/sh
+#!/usr/bin/env python3
+import subprocess
+from pathlib import Path
 
-clang-format -i include/*.h src/*.c
+# --- CONFIGURATION ---
+# Hardcoded list of subfolders to format (relative to project root)
+TARGET_DIRS = ["src", "include", "test"]
+
+# File extensions to format
+EXTENSIONS = {".c", ".cpp", ".cc", ".h", ".hpp", ".hh"}
+
+# Path to clang-format executable (can just be "clang-format" if it's in PATH)
+CLANG_FORMAT = "clang-format"
+
+
+def format_files():
+    root = Path(__file__).parent.resolve()
+
+    for subdir in TARGET_DIRS:
+        base = root / subdir
+        if not base.exists():
+            print(f"[skip] Folder not found: {base}")
+            continue
+
+        print(f"[scan] Searching in {base} ...")
+        for file in base.rglob("*"):
+            if file.is_file() and file.suffix in EXTENSIONS:
+                try:
+                    subprocess.run([CLANG_FORMAT, "-i", str(file)], check=True)
+                    print(f"[fmt] {file.relative_to(root)}")
+                except subprocess.CalledProcessError:
+                    print(f"[err] Failed to format: {file}")
+
+
+if __name__ == "__main__":
+    format_files()
