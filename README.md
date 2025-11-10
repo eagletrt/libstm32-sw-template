@@ -44,6 +44,11 @@ To setup git hooks in your local repository you will have to execute the followi
 ```sh
 cd library-name
 ```
+
+```sh
+chmod +x hooks/pre-commit
+```
+
 ```sh
 git config core.hooksPath hooks/
 ```
