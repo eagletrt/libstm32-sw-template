@@ -13,24 +13,46 @@ EXTENSIONS = {".c", ".cpp", ".cc", ".h", ".hpp", ".hh"}
 CLANG_FORMAT = "clang-format"
 
 
-def format_files():
-    root = Path(__file__).parent.resolve()
+def find_git_root(file_path : Path) -> Path:
+    try:
+        cwd = file_path.parent
+        result = subprocess.run(
+            ['git', 'rev-parse', '--show-toplevel'],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=True,
+            text=True,
+            cwd=cwd
+        )
+        path_str = result.stdout.strip()
+        if path_str:
+            path = Path(path_str)
+            if path.is_dir():
+                return path
+        print("Error: Received an invalid path.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e.stderr.strip()}")
+    return None
 
+
+def format_files(root : Path):
     for subdir in TARGET_DIRS:
         base = root / subdir
         if not base.exists():
             print(f"[skip] Folder not found: {base}")
             continue
-
-        print(f"[scan] Searching in {base} ...")
         for file in base.rglob("*"):
             if file.is_file() and file.suffix in EXTENSIONS:
                 try:
                     subprocess.run([CLANG_FORMAT, "-i", str(file)], check=True)
-                    print(f"[fmt] {file.relative_to(root)}")
                 except subprocess.CalledProcessError:
                     print(f"[err] Failed to format: {file}")
 
 
 if __name__ == "__main__":
-    format_files()
+    root = find_git_root(Path(__file__))
+    if not root:
+        print("[err] Not in a Git repository or an error occurred.")
+        exit(1)
+
+    format_files(root)
