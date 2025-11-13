@@ -35,7 +35,7 @@ def find_git_root(file_path : Path) -> Path:
     return None
 
 
-def format_files(root : Path):
+def format_files(root: Path):
     for subdir in TARGET_DIRS:
         base = root / subdir
         if not base.exists():
