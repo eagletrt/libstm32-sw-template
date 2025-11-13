@@ -13,7 +13,7 @@ EXTENSIONS = {".c", ".cpp", ".cc", ".h", ".hpp", ".hh"}
 CLANG_FORMAT = "clang-format"
 
 
-def find_git_root(file_path : Path) -> Path:
+def find_git_root(file_path: Path) -> Path:
     try:
         cwd = file_path.parent
         result = subprocess.run(
