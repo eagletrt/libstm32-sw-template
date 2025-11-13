@@ -42,7 +42,7 @@ For more info check the READMEs inside the corresponding folders.
 
 To setup git hooks in your local repository you will have to execute the following commands:
 ```sh
-cd library-name
+cd <library-name>
 ```
 
 ```sh
