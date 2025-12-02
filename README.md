@@ -37,3 +37,18 @@ No other folders should be created besides the ones described before if not
 necessary, to handle complex file structures nested folders can be used.
 
 For more info check the READMEs inside the corresponding folders.
+
+## Git Hooks
+
+To setup git hooks in your local repository you will have to execute the following commands:
+```sh
+cd <library-name>
+```
+
+```sh
+chmod +x hooks/pre-commit
+```
+
+```sh
+git config core.hooksPath hooks/
+```
