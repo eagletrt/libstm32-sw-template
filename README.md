@@ -18,6 +18,9 @@ Before starting to develop the library, a couple of things need to be done:
     - The list of **header files** of the library
     - The list of **examples**
     - The file of the library to **export** (if needed)
+3. Modify the `Doxyfile`:
+    - change the `PROJECT_NAME` to the name of the library
+    - change the `VERSION` to the version of the library
 
 ## Structure
 
